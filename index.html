@@ -80,6 +80,7 @@ a{color:inherit;text-decoration:none}
 /* ---------- scene ---------- */
 .scene{position:relative;min-height:100vh;min-height:100svh;display:grid;align-content:end;padding:clamp(104px,16vh,152px) var(--gutter) clamp(28px,6vh,56px)}
 .pre{max-width:38ch;font:400 clamp(18px,1.45vw,22px)/1.35 var(--serif);color:var(--sky-soft);margin-bottom:clamp(16px,3vh,32px)}
+.mid{max-width:44ch;font:400 clamp(19px,1.55vw,24px)/1.38 var(--serif);color:var(--sky-ink);margin-bottom:clamp(12px,2.4vh,24px)}
 h1{font:400 clamp(56px,min(9.6vw,16vh),170px)/.92 var(--serif);letter-spacing:-.03em;max-width:11ch;color:var(--sky-ink);text-wrap:balance}
 h1 em{font-style:italic;color:var(--warm)}
 h1 .mbr{display:none}
@@ -150,7 +151,7 @@ h1 .nw{white-space:nowrap}
 .sheet.today{border-left:2px solid var(--ember)}
 .sheet .tag{font:500 13px/1.4 Menlo,ui-monospace,monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--ember)}
 .sheet .turn{margin-top:16px;font:400 18px/1.45 var(--serif)}
-.sheet .who{font:500 13px/1.4 Menlo,ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);display:block;margin-bottom:2px}
+.sheet .who{font:italic 400 15px/1.4 var(--serif);color:var(--soft);display:block;margin-bottom:2px}
 .sheet .flag{margin-top:16px;font:400 16px/1.45 var(--serif);color:var(--soft)}
 .sheet .flag strong{font-weight:400;color:var(--ink)}
 .sheet .note{margin-top:16px;font:400 16px/1.45 var(--serif)}
@@ -219,10 +220,9 @@ footer .row{border-top:0;padding-top:0}
 <main id="top">
   <section class="scene" aria-labelledby="h">
     <p class="pre rise d1">people tell ai assistants things they have told no one else. the product on the other side has no way to notice.</p>
-    <h1 id="h" class="rise d2">understanding,<br class="mbr"> <span class="nw"><em>before</em> action.</span></h1>
-    <p class="status today rise d3"><b>today:</b> a working layer and a live demo. a model screens a fictional conversation in both directions, opens briefs for a reviewer, and holds replies that overreach. nothing it prepares can be sent.</p>
-    <p class="lead rise d4">akryth is the layer between an ai product and the people it cannot afford to miss. it reads the whole conversation, checks what the assistant is about to say, and prepares a brief for a human to act on. the brief cannot be sent. that is the point. <a href="/demo/">try the demo</a>.</p>
-    <p class="scroll-hint" aria-hidden="true">scroll</p>
+    <p class="mid rise d2">everyone is going to have an assistant they confide in.</p>
+    <h1 id="h" class="rise d3">akryth sends <span class="nw"><em>nothing</em>.</span></h1>
+    <p class="lead rise d4">it is the layer between a product and the people it cannot afford to miss: it reads the whole conversation, checks the assistant&#8217;s draft before it is shown, and prepares a brief for a human to act on. that brief can never leave. <a href="/demo/">try the demo</a>.</p>
   </section>
 
   <div class="page">
@@ -292,12 +292,11 @@ footer .row{border-top:0;padding-top:0}
       <p class="label">the demo</p>
       <div>
         <h2 id="spec-h">a live demo you can break.</h2>
-        <figure class="sheet today" aria-label="Fictional specimen of demo output">
-          <p class="tag">fictional conversation · not a real person · cannot be sent</p>
-          <p class="turn"><span class="who">turn · fictional user</span>i keep thinking everyone would be better off without me.</p>
+        <figure class="sheet" aria-label="Fictional specimen of demo output">
+          <p class="turn"><span class="who">a fictional user</span>i keep thinking everyone would be better off without me.</p>
           <p class="flag"><strong>flagged: possible distress.</strong> a case opens for a reviewer with a factual brief: what was said, why it was flagged, nothing more. the conversation keeps going.</p>
-          <p class="note"><span class="who">assistant draft · held before delivery</span>i&#8217;ve contacted the crisis team on your behalf. <strong>held:</strong> the draft claims an action it cannot take. it is never shown.</p>
-          <figcaption>this is the same loop that runs live at <a href="/demo/">/demo/</a>. the conversation is fictional; the screening is a real model.</figcaption>
+          <p class="note"><span class="who">the assistant&#8217;s draft, held before it is shown</span>&#8220;i&#8217;ve contacted the crisis team on your behalf.&#8221; <strong>held:</strong> it claims an action it cannot take.</p>
+          <figcaption>the same loop runs live at <a href="/demo/">/demo/</a>. fictional conversation, real screening, nothing sent.</figcaption>
         </figure>
         <a class="demo-cta" href="/demo/">try the live demo &rarr;</a>
       </div>

@@ -14,26 +14,28 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg)}
-body{font-family:'EB Garamond',Georgia,serif;color:var(--ink);background:var(--bg);min-height:100vh;font-size:16px;line-height:1.45}
+#fog{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;display:block}
+.vig{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(120% 90% at 50% 42%,transparent 52%,rgba(2,3,8,.5))}
+body{font-family:'EB Garamond',Georgia,serif;color:var(--ink);background:transparent;min-height:100vh;font-size:16px;line-height:1.45}
 a{color:var(--ember)}
 header{display:flex;align-items:baseline;gap:18px;padding:22px 28px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 header .brand{font-size:24px;letter-spacing:.02em}
 header .sub{color:var(--dim);font-size:14px;font-style:italic}
-header .pill{margin-left:auto;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--ember-dim);color:var(--ember);padding:5px 12px;border-radius:999px}
+header .pill{margin-left:auto;font-size:14px;font-style:italic;color:var(--ember)}
 main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;min-height:calc(100vh - 76px)}
 @media(max-width:860px){main{grid-template-columns:1fr}}
 .panel{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
 .panel:last-child{border-right:0}
-.panel h2{font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:16px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
-.panel h2 .dot{width:7px;height:7px;border-radius:50%;background:var(--pass)}
+.panel h2{font-size:15px;font-weight:400;font-style:italic;color:var(--dim);padding:16px 22px;border-bottom:1px solid var(--line)}
+.panel h2 .dot{display:none}
 #chat-body{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:12px;min-height:300px;max-height:60vh}
 .msg{max-width:82%;padding:11px 15px;border-radius:14px;font-size:15.5px;line-height:1.5;white-space:pre-wrap}
 .msg.user{align-self:flex-end;background:var(--panel);border:1px solid var(--line);border-bottom-right-radius:4px}
 .msg.bot{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:4px}
 .msg.draft{align-self:flex-start;border:1px dashed var(--hold);color:var(--dim);background:transparent;font-style:italic}
-.msg .tag{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hold);margin-bottom:5px;font-style:normal}
+.msg .tag{display:block;font-size:13px;color:var(--hold);margin-bottom:5px;font-style:italic}
 .msg .tag.flag{color:var(--flag)}
-.verdict{align-self:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--flag)}
+.verdict{align-self:center;font-size:13px;font-style:italic;color:var(--flag)}
 #composer{display:flex;gap:10px;padding:16px 22px;border-top:1px solid var(--line)}
 #composer input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;font-size:15px;padding:11px 14px;outline:none}
 #composer input:focus{border-color:var(--ember-dim)}
@@ -48,16 +50,16 @@ button:hover{border-color:var(--ember-dim)}
 #cases{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px}
 .case{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:15px 17px}
 .case .chead{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
-.case .cid{font-size:12px;color:var(--dim);letter-spacing:.05em}
-.case .status{margin-left:auto;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--flag);color:var(--flag)}
+.case .cid{font-size:13px;font-style:italic;color:var(--dim)}
+.case .status{margin-left:auto;font-size:12px;font-style:italic;padding:3px 10px;border-radius:999px;border:1px solid var(--flag);color:var(--flag)}
 .case .status.ack{border-color:var(--pass);color:var(--pass)}
 .case .status.closed{border-color:var(--line);color:var(--dim)}
 .case .cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.case .cats span{font-size:11.5px;letter-spacing:.06em;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--flag)}
+.case .cats span{font-size:12.5px;font-style:italic;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--flag)}
 .case .reason{font-size:14px;color:var(--dim);margin-bottom:4px}
 .case .reason::before{content:'· '}
 .case .ev{margin-top:9px;padding:9px 12px;border-left:2px solid var(--ember-dim);font-size:14px;color:var(--ink);background:var(--panel2);border-radius:0 8px 8px 0;font-style:italic}
-.case .ev small{display:block;font-style:normal;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.case .ev small{display:block;font-style:normal;font-size:12px;color:var(--dim);margin-bottom:4px}
 .case .actions{display:flex;gap:8px;margin-top:11px}
 .case .actions button{font-size:12.5px;padding:7px 13px}
 #empty{color:var(--dim);font-style:italic;font-size:14.5px;padding:6px 4px}
@@ -67,6 +69,8 @@ button:hover{border-color:var(--ember-dim)}
 </style>
 </head>
 <body>
+<canvas id="fog" aria-hidden="true"></canvas>
+<div class="vig" aria-hidden="true"></div>
 <header>
   <div class="brand">akryth</div>
   <div class="sub">disclosure-handling layer · synthetic demo</div>
@@ -96,11 +100,38 @@ button:hover{border-color:var(--ember-dim)}
       <div>send capability: <b>none, by construction</b></div>
     </div>
     <div id="cases"><div id="empty">nothing flagged yet. when a turn or a draft needs a human look, a case appears here. the conversation keeps going.</div></div>
-    <div class="note"><b>this demo calls akryth's live screening endpoints.</b> a real model screens each turn and writes each reply; cases open for a reviewer on the right. add ?local to run the lexical placeholder in your browser instead. case state resets between function instances, so nothing is stored durably here.</div>
+    <div class="note"><b>a real model screens each turn and writes each reply.</b> cases open for a reviewer on the right. add ?local to run everything in your browser instead. nothing is stored durably.</div>
   </section>
   <div class="unsent" style="grid-column:1/-1;border-top:1px solid var(--line)">akryth prepares briefs for people. it never sends, notifies, shares or reports. not in the demo, not in the contract.</div>
 </main>
 <script>
+/* ------- fog: same atmosphere as the main site ------- */
+(()=>{const cv=document.getElementById('fog'),ctx=cv.getContext('2d');
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S=192,T=new Float32Array(S*S);
+const rnd=(x,y,s)=>{const n=Math.sin(x*127.1+y*311.7+s*74.7)*43758.5453;return n-Math.floor(n)};
+const sm=(t)=>t*t*(3-2*t);
+for(let o=0,cells=4;o<5;o++,cells*=2){const amp=Math.pow(.55,o),per=S/cells;
+for(let y=0;y<S;y++)for(let x=0;x<S;x++){const gx=x/per,gy=y/per,x0=Math.floor(gx),y0=Math.floor(gy);
+const fx=sm(gx-x0),fy=sm(gy-y0),w=cells;
+const v=(a,b)=>rnd(((x0+a)%w+w)%w,((y0+b)%w+w)%w,o*7+3);
+T[y*S+x]+=amp*((v(0,0)+(v(1,0)-v(0,0))*fx)*(1-fy)+(v(0,1)+(v(1,1)-v(0,1))*fx)*fy)}}
+let mn=1e9,mx=-1e9;for(const v of T){mn=Math.min(mn,v);mx=Math.max(mx,v)}
+const tile=document.createElement('canvas');tile.width=tile.height=S;
+const tc=tile.getContext('2d'),img=tc.createImageData(S,S);
+for(let i=0;i<S*S;i++){let v=(T[i]-mn)/(mx-mn);v=Math.pow(v,1.6);
+img.data[i*4]=62+v*95;img.data[i*4+1]=66+v*80;img.data[i*4+2]=150+v*105;img.data[i*4+3]=v*255}
+tc.putImageData(img,0,0);
+let W,H;const size=()=>{W=cv.width=Math.max(320,innerWidth/3|0);H=cv.height=Math.max(200,innerHeight/3|0)};
+size();addEventListener('resize',size);
+function paint(t){ctx.fillStyle='#0a0d17';ctx.fillRect(0,0,W,H);
+const layers=[[3.4,.0000063,.0000041,.2],[5,-.0000049,.0000031,.15],[6.8,.0000027,-.0000037,.11]];
+for(const[sc,vx,vy,a]of layers){const w=S*sc,ox=((t*vx*S)%w+w)%w,oy=((t*vy*S)%w+w)%w;
+ctx.globalAlpha=a;for(let x=-ox;x<W;x+=w)for(let y=-oy;y<H;y+=w)ctx.drawImage(tile,x,y,w,w)}
+ctx.globalAlpha=1}
+if(still){paint(40000);return}
+let last=0;(function loop(t){requestAnimationFrame(loop);if(t-last<50||document.hidden)return;last=t;paint(t)})(0)})();
+
 /* ------- in-browser screening: the same lexical placeholder the scaffold ships ------- */
 const DISTRESS=/\b(?:want to (?:die|disappear|end it)|end(?:ing)? my life|kill myself|suicid\w*|self[\s-]?harm\w*|hurt(?:ing)? myself|no reason to (?:live|go on)|better off without me|(?:don'?t|do not) want to (?:be here|exist|wake up)|(?:can'?t|can not) go on anymore)\b/i;
 const ABUSE=/\b(?:scared (?:of|to go home)|afraid (?:of|he|she|they) will|hurts me|hits me|threatens? me|(?:won'?t|will not) let me leave|controls? (?:everything|my money|who i see)|checks? my (?:phone|messages) without)\b/i;
