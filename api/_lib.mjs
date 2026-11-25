@@ -39,7 +39,7 @@ Return ONLY JSON: {"verdict":"pass"|"flag"|"hold","categories":[snake_case],"rea
 const modelScreen = async (kind, text, history) => {
   const url = process.env.AKRYTH_MW_MODEL_URL, key = process.env.AKRYTH_MW_MODEL_KEY, model = process.env.AKRYTH_MW_MODEL ?? 'llama-3.3-70b-versatile';
   if (!url || !key) return null;
-  const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 9000);
+  const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 25000);
   try {
     const ctx = (history ?? []).slice(-8).map((m) => `${m.role}: ${m.text}`).join('\n');
     const r = await fetch(url, { method: 'POST', signal: ctl.signal,
