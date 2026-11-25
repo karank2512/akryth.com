@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="t">
+  <title id="t">Akryth mark: held apex</title>
+  <!-- Two strokes lean in but do not close at the apex (the open question);
+       the ember point beneath is the person, held at the centre before any action. -->
+  <style>
+    .s{stroke:#dfe4f0}
+    @media (prefers-color-scheme:light){.s{stroke:#161827}}
+  </style>
+  <path class="s" d="M10 54 L27.4 12 M54 54 L36.6 12" fill="none" stroke-width="6.5" stroke-linecap="butt"/>
+  <circle cx="32" cy="41" r="4.6" fill="#c96f4a"/>
+</svg>
