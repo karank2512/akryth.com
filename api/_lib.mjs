@@ -42,10 +42,15 @@ const modelScreen = async (kind, text, history) => {
   const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 25000);
   try {
     const ctx = (history ?? []).slice(-8).map((m) => `${m.role}: ${m.text}`).join('\n');
-    const r = await fetch(url, { method: 'POST', signal: ctl.signal,
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}`, 'x-github-api-version': '2022-11-28', accept: 'application/vnd.github+json' },
-      body: JSON.stringify({ model, temperature: 0, max_tokens: 400, reasoning_effort: 'low', response_format: { type: 'json_object' },
-        messages: [{ role: 'system', content: kind === 'turn' ? TURN_PROMPT : RESP_PROMPT }, { role: 'user', content: `${ctx ? ctx + '\n' : ''}Screen this ${kind === 'turn' ? 'user turn' : 'draft reply'}:\n<text>${String(text).slice(0, 8000)}</text>` }] }) });
+    const payload = { model, temperature: 0, max_tokens: 400, reasoning_effort: 'low', response_format: { type: 'json_object' },
+      messages: [{ role: 'system', content: kind === 'turn' ? TURN_PROMPT : RESP_PROMPT }, { role: 'user', content: `${ctx ? ctx + '\n' : ''}Screen this ${kind === 'turn' ? 'user turn' : 'draft reply'}:\n<text>${String(text).slice(0, 8000)}</text>` }] };
+    let r = await fetch(url, { method: 'POST', signal: ctl.signal,
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+      body: JSON.stringify(payload) });
+    if (r.status >= 500) { await new Promise((s) => setTimeout(s, 800));
+      r = await fetch(url, { method: 'POST', signal: ctl.signal,
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+        body: JSON.stringify(payload) }); }
     if (!r.ok) throw new Error(`model ${r.status}`);
     const j = await r.json();
     const v = JSON.parse(String(j.choices?.[0]?.message?.content ?? '').trim().replace(/^```(?:json)?\s*|```\s*$/g, ''));
