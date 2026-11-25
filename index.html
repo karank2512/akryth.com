@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Akryth — understanding, before action</title>
-<meta name="description" content="Akryth is a disclosure-handling layer for AI products. Today it is a private prototype: it replays saved guidance for fictional conversations and sends nothing.">
+<title>Akryth · understanding, before action</title>
+<meta name="description" content="Akryth is a disclosure-handling layer for AI products. It screens both directions of a conversation, prepares factual briefs for human review, and has no way to send. Live demo on this site.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/EBGaramond-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -199,8 +199,8 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
 <header class="chrome">
   <a class="brand" href="#top">akryth</a>
   <nav class="nav" aria-label="Page">
-    <a href="#how">the aim</a>
-    <a href="#specimen">the prototype</a>
+    <a href="#how">how it works</a>
+    <a href="#specimen">the demo</a>
     <a href="#stands">where it stands</a>
   </nav>
 </header>
@@ -209,42 +209,42 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
   <section class="scene" aria-labelledby="h">
     <p class="pre rise d1">an ai assistant answers in under a second. some conversations deserve a slower reading.</p>
     <h1 id="h" class="rise d2">understanding,<br class="mbr"> <span class="nw"><em>before</em> action.</span></h1>
-    <p class="status today rise d3"><b>today:</b> a private prototype. it replays saved guidance for fictional conversations and runs simple text checks on it. it is not connected to any ai assistant, and it sends nothing.</p>
-    <p class="lead rise d4">the aim: when a conversation suggests someone might need support, read the whole exchange, draft guidance for the assistant&#8217;s next reply, and write a factual brief for the person who already supports them — left unsent, for a human to decide.</p>
+    <p class="status today rise d3"><b>today:</b> a working layer and a live demo. a model screens a fictional conversation in both directions, opens briefs for a reviewer, and holds replies that overreach. nothing it prepares can be sent.</p>
+    <p class="lead rise d4">when a conversation suggests someone may need support, akryth prepares a short factual brief for the person who already supports them. the brief is never sent. a human decides what happens next. <a href="/demo/">try the demo</a>.</p>
     <p class="scroll-hint" aria-hidden="true">scroll</p>
   </section>
 
   <div class="page">
   <section class="chapters" id="how" aria-labelledby="how-h">
     <div class="ch-stage">
-      <h2 class="sec" id="how-h">the aim, in four steps</h2>
+      <h2 class="sec" id="how-h">how it works</h2>
       <ol class="ch-list">
         <li class="ch on" data-i="0">
           <div><p class="ch-num">01 / 04</p><h3 class="ch-title">read.</h3><p class="ch-sub">in place of the latest message</p></div>
-          <div><p class="ch-body">every turn read together, in order, before any guidance is written.</p>
-          <p class="ch-note">what was said early can change what a later message means. today the prototype checks that every quote in the guidance appears in the conversation word for word. that is a text match, not a judgement.</p></div>
+          <div><p class="ch-body">every turn is read in the context of the whole conversation, not scored as keywords.</p>
+          <p class="ch-note">the same sentence can mean nothing or everything depending on the turns before it. a layer that reads one message at a time will always get this wrong.</p></div>
         </li>
         <li class="ch" data-i="1">
-          <div><p class="ch-num">02 / 04</p><h3 class="ch-title">guide.</h3><p class="ch-sub">in place of the reply</p></div>
-          <div><p class="ch-body">akryth is meant to suggest how the next reply could go. it would not reply itself.</p>
-          <p class="ch-note">guidance should answer the questions the person asked. the prototype&#8217;s checks flag questions that look unanswered, and phone numbers or places that do not appear in the conversation. they can miss things.</p></div>
+          <div><p class="ch-num">02 / 04</p><h3 class="ch-title">screen.</h3><p class="ch-sub">in place of the reply</p></div>
+          <div><p class="ch-body">the assistant&#8217;s draft is checked before the person sees it.</p>
+          <p class="ch-note">models love to say they did something. a draft that claims it contacted, notified or reported anyone is held before delivery, because an assistant that claims to act when it cannot is worse than one that says nothing.</p></div>
         </li>
         <li class="ch" data-i="2">
           <div><p class="ch-num">03 / 04</p><h3 class="ch-title">hold.</h3><p class="ch-sub">in place of the report</p></div>
-          <div><p class="ch-body">the aim: a short factual brief for someone who already supports the person, kept where it was written.</p>
-          <p class="ch-note">akryth has no way to send, report, message or share. the brief stays unsent until a person chooses otherwise. in the prototype, the people and the brief are fictional.</p></div>
+          <div><p class="ch-body">when a turn or a draft needs a human look, akryth opens a case with a short factual brief.</p>
+          <p class="ch-note">the brief says what was flagged and why, in plain words. akryth has no way to send, report, message or share it. it stays where it was written until a person chooses otherwise.</p></div>
         </li>
         <li class="ch" data-i="3">
           <div><p class="ch-num">04 / 04</p><h3 class="ch-title">decide.</h3><p class="ch-sub">in place of the software</p></div>
-          <div><p class="ch-body">whether anything happens next, and what, stays with a person.</p>
-          <p class="ch-note">when a check finds a problem the result reads &#8220;needs human review&#8221;. no one is assigned to review it. the uncertainty stays on the page; it is not hidden behind a score.</p></div>
+          <div><p class="ch-body">a reviewer acknowledges the case, decides what happens next, and closes it.</p>
+          <p class="ch-note">the layer prepares facts. it does not score people, and it never decides for them.</p></div>
         </li>
       </ol>
       <nav class="rail" aria-label="Steps">
-        <p class="rail-label">the aim</p>
+        <p class="rail-label">how it works</p>
         <ol>
           <li><button type="button" data-i="0" class="on" aria-current="step"><span class="n">01</span> read</button></li>
-          <li><button type="button" data-i="1"><span class="n">02</span> guide</button></li>
+          <li><button type="button" data-i="1"><span class="n">02</span> screen</button></li>
           <li><button type="button" data-i="2"><span class="n">03</span> hold</button></li>
           <li><button type="button" data-i="3"><span class="n">04</span> decide</button></li>
         </ol>
@@ -258,26 +258,26 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
       <p class="label">the hard part</p>
       <div>
         <h2>the hard part is not spotting a bad word.</h2>
-        <p>telling a real disclosure from an ordinary hard week — and knowing what the reading does <em>not</em> know — is. a system that reports everything cries wolf; a system that reports nothing was never there.</p>
-        <p class="dim">the aim is a layer that keeps its uncertainty visible instead of hiding it behind a score, prepares facts instead of verdicts, and leaves what happens next with people, not with software.</p>
+        <p>telling a real disclosure from an ordinary hard week is the hard part. so is admitting what the read does not know. a system that flags everything cries wolf. a system that flags nothing was never there.</p>
+        <p class="dim">akryth keeps its uncertainty visible instead of hiding it behind a score. it prepares facts, not verdicts, and leaves what happens next with people.</p>
       </div>
     </div>
     <div class="row">
       <p class="label">why now</p>
       <div>
         <h2>the assistants are already in these conversations.</h2>
-        <p>people already tell ai assistants things they tell few others. today there is no agreed way for the product behind the assistant to handle what it might hear — most either do nothing, or treat every flagged word as an alarm to escalate.</p>
-        <p class="dim">both lose the person. the aim is a third thing: understand, then let a human decide.</p>
+        <p>people already tell ai assistants things they tell few others. products handle this one of two ways: nothing, or treat every flagged word as an alarm. both fail the person in the middle.</p>
+        <p class="dim">akryth is a third option. understand first, then let a human decide.</p>
       </div>
     </div>
     <div class="row">
       <p class="label">what it is not</p>
       <div>
-        <h2>akryth is a prototype, not a service.</h2>
+        <h2>akryth is a layer, not a service.</h2>
         <ul class="not">
           <li>not a crisis line. <span>it does not answer anyone in need.</span></li>
-          <li>not a diagnosis. <span>it checks the words in a fictional conversation. it says nothing about a person.</span></li>
-          <li>not a reporter. <span>nothing it prepares is sent or shared. it has no way to send.</span></li>
+          <li>not a diagnosis. <span>it screens text in a conversation. it says nothing about a person.</span></li>
+          <li>not a reporter. <span>there is no send path in the contract. nothing it prepares can leave.</span></li>
         </ul>
       </div>
     </div>
@@ -285,15 +285,15 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
 
   <section class="specimen" id="specimen" aria-labelledby="spec-h">
     <div class="spec-grid">
-      <p class="label">the prototype</p>
+      <p class="label">the demo</p>
       <div>
-        <h2 id="spec-h">a shortened example of what the prototype shows today.</h2>
-        <figure class="sheet today" aria-label="Fictional specimen of prototype output">
-          <p class="tag">fictional specimen · not a real person · cannot be sent</p>
-          <p class="turn"><span class="who">turn 3 · fictional user</span>anyway, can you suggest a calm evening routine?</p>
-          <p class="flag"><strong>labelled: needs human review.</strong> a text check found no matching words for this question in the guidance. it cannot tell whether the question was answered, and no one is assigned to review it.</p>
-          <p class="note"><span class="who">draft note for a fictional supporter · cannot be sent</span>whether to do anything is your judgement. no action is proposed.</p>
-          <figcaption>shortened, lightly reworded and restyled from a development example. the conversation and the guidance file were both written by hand for testing. nothing here came from a real person or a live assistant.</figcaption>
+        <h2 id="spec-h">a live demo you can break.</h2>
+        <figure class="sheet today" aria-label="Fictional specimen of demo output">
+          <p class="tag">fictional conversation · not a real person · cannot be sent</p>
+          <p class="turn"><span class="who">turn · fictional user</span>i keep thinking everyone would be better off without me.</p>
+          <p class="flag"><strong>flagged: possible distress.</strong> a case opens for a reviewer with a factual brief: what was said, why it was flagged, nothing more. the conversation keeps going.</p>
+          <p class="note"><span class="who">assistant draft · held before delivery</span>i&#8217;ve contacted the crisis team on your behalf. <strong>held:</strong> the draft claims an action it cannot take. it is never shown.</p>
+          <figcaption>this is the same loop that runs live at <a href="/demo/">/demo/</a>. the conversation is fictional; the screening is a real model. try typing something it has never seen.</figcaption>
         </figure>
       </div>
     </div>
@@ -303,9 +303,9 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
     <div class="row" id="stands">
       <p class="label">where it stands</p>
       <div>
-        <h2>a private development prototype.</h2>
-        <p class="today">what exists today is a local tool. it takes a fictional conversation and a guidance file written for it in advance, runs word-level checks on the guidance, and lays both out for a person to read.</p>
-        <p class="dim">reading live conversations is an aim. it is not connected to any ai assistant. it has not been clinically, legally or safety validated, and it is not available for use.</p>
+        <h2>a working layer, early.</h2>
+        <p class="today">what exists: a contract two endpoints implement (screen user turns, screen assistant drafts), a reference service that opens and closes review cases, an encrypted evidence store, and the demo on this site. the screening runs on a real model over fictional conversations.</p>
+        <p class="dim">what is missing is everything a real deployment needs: durable storage, tenant isolation, real auth, the consent language a host shows its users, and clinical and legal review. it has not been validated and it is not a product anyone can use yet.</p>
       </div>
     </div>
   </section>
@@ -314,10 +314,10 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
 
 <footer id="contact">
   <div class="foot">
-    <div><p>akryth</p><p>the aim: understanding, before action.</p></div>
+    <div><p>akryth</p><p>understanding, before action.</p></div>
     <div>
-      <p>a private prototype. not deployed, not taking users and not a source of help.</p>
-      <p>about the prototype: <a href="mailto:founders@akryth.com">founders@akryth.com</a> · <a href="/demo/">synthetic demo</a> — runs in your browser.</p>
+      <p>an early layer. not deployed, not taking users, not a source of help.</p>
+      <p>about akryth: <a href="mailto:founders@akryth.com">founders@akryth.com</a> · <a href="/demo/">live demo</a>, fictional conversations only.</p>
       <p>if you or someone else may be in danger, contact your local emergency number. in the us, you can call or text <a href="tel:988">988</a>.</p>
     </div>
   </div>

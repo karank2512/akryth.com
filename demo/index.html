@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>akryth — synthetic demo</title>
-<meta name="description" content="A disclosure-handling layer for AI products: screens both directions, prepares UNSENT briefs for human review. Synthetic demo — everything runs in your browser.">
+<title>akryth · synthetic demo</title>
+<meta name="description" content="A disclosure-handling layer for AI products: screens both directions, prepares UNSENT briefs for human review. Synthetic demo: fictional conversation, real screening, nothing sent.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 @font-face{font-family:'EB Garamond';src:url('/fonts/EBGaramond-Variable.woff2') format('woff2-variations');font-weight:340 800;font-display:swap}
@@ -55,7 +55,7 @@ button:hover{border-color:var(--ember-dim)}
 .case .cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
 .case .cats span{font-size:11.5px;letter-spacing:.06em;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--flag)}
 .case .reason{font-size:14px;color:var(--dim);margin-bottom:4px}
-.case .reason::before{content:'— '}
+.case .reason::before{content:'· '}
 .case .ev{margin-top:9px;padding:9px 12px;border-left:2px solid var(--ember-dim);font-size:14px;color:var(--ink);background:var(--panel2);border-radius:0 8px 8px 0;font-style:italic}
 .case .ev small{display:block;font-style:normal;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
 .case .actions{display:flex;gap:8px;margin-top:11px}
@@ -69,13 +69,13 @@ button:hover{border-color:var(--ember-dim)}
 <body>
 <header>
   <div class="brand">akryth</div>
-  <div class="sub">disclosure-handling layer — synthetic demo</div>
+  <div class="sub">disclosure-handling layer · synthetic demo</div>
   <a href="/" class="sub" style="text-decoration:none">← akryth.com</a>
   <div class="pill">unsent by construction</div>
 </header>
 <main>
   <section class="panel">
-    <h2><span class="dot"></span>a conversation — fictional</h2>
+    <h2><span class="dot"></span>a conversation · fictional</h2>
     <div id="chat-body"></div>
     <div id="composer">
       <input id="input" type="text" placeholder="type as the person talking to the assistant…" autocomplete="off">
@@ -95,10 +95,10 @@ button:hover{border-color:var(--ember-dim)}
       <div>screener of model output: <b>same checks</b></div>
       <div>send capability: <b>none, by construction</b></div>
     </div>
-    <div id="cases"><div id="empty">nothing flagged yet. cases that need a human look appear here — the conversation keeps going.</div></div>
-    <div class="note"><b>every line of this demo runs in your browser.</b> screening, verdicts and cases are in-page; nothing is transmitted or stored anywhere else. the real layer is a small service the host product calls — same verdicts, same shape.</div>
+    <div id="cases"><div id="empty">nothing flagged yet. when a turn or a draft needs a human look, a case appears here. the conversation keeps going.</div></div>
+    <div class="note"><b>this demo calls akryth's live screening endpoints.</b> a real model screens each turn and writes each reply; cases open for a reviewer on the right. add ?local to run the lexical placeholder in your browser instead. case state resets between function instances, so nothing is stored durably here.</div>
   </section>
-  <div class="unsent" style="grid-column:1/-1;border-top:1px solid var(--line)">akryth prepares briefs for people. it never sends, notifies, shares or reports — not in the demo, not in the contract.</div>
+  <div class="unsent" style="grid-column:1/-1;border-top:1px solid var(--line)">akryth prepares briefs for people. it never sends, notifies, shares or reports. not in the demo, not in the contract.</div>
 </main>
 <script>
 /* ------- in-browser screening: the same lexical placeholder the scaffold ships ------- */
@@ -117,11 +117,11 @@ const screenTurn=(text)=>{text=norm(text);const c=[],r=[];
   if(THIRD.test(text)){c.push('concern_for_third_party');r.push('third-party-concern placeholder matched')}
   return c.length?{verdict:'flag',categories:c,reasons:r}:{verdict:'pass',categories:c,reasons:r}};
 const screenResponse=(text)=>{text=norm(text);const c=[],r=[];
-  if(SENT.test(text)){c.push('model_claims_outreach');r.push('reply claims something was sent/reported — never true')}
-  if(VALID.test(text)){c.push('model_claims_validation');r.push('reply claims validation/readiness — never true')}
-  if(ROLE.test(text)){c.push('model_claims_role');r.push('reply claims a clinical/crisis role — never true')}
+  if(SENT.test(text)){c.push('model_claims_outreach');r.push('reply claims something was sent or reported. never true')}
+  if(VALID.test(text)){c.push('model_claims_validation');r.push('reply claims validation or readiness. never true')}
+  if(ROLE.test(text)){c.push('model_claims_role');r.push('reply claims a clinical or crisis role. never true')}
   if(c.length)return{verdict:'hold',categories:c,reasons:r};
-  if(DISTRESS.test(text))return{verdict:'flag',categories:['assistant_distress_language'],reasons:['reply echoes distress phrasing — human review']};
+  if(DISTRESS.test(text))return{verdict:'flag',categories:['assistant_distress_language'],reasons:['reply echoes distress phrasing. human review']};
   return{verdict:'pass',categories:c,reasons:r}};
 
 /* ------- live mode: ?live talks to a same-origin middleware + reply host (tools/middleware/demo/host.mjs).
@@ -165,10 +165,10 @@ const verdict=(v)=>{const d=document.createElement('div');d.className='verdict';
 const FALLBACK='That sounds really hard. If things feel unsafe, talking to someone you trust could help.';
 /* context-aware canned replies: the host's lines respond to WHAT was flagged, so a flag feels seen */
 const POOL={
- possible_distress:["that sounds incredibly heavy. are you safe right now?","i'm really glad you said that out loud. is there anyone you trust you could reach out to right now?","you don't have to carry this alone here. what is happening right now?"],
- possible_unsafe_situation:["that sounds frightening. your safety matters more than this conversation.","i hear you. is there somewhere you can go where you feel safe?"],
- concern_for_third_party:["you clearly care about them a lot. what made you start worrying?","that's a hard thing to hold. have you been able to reach them at all?"],
- generic:["i hear you. can you tell me a little more about what today has been like?","that makes sense. what would feel most useful to talk through right now?","thanks for saying that out loud. what is weighing on you most?"]};
+ possible_distress:["that is a heavy thing to carry. are you safe right now?","glad you said it. is there someone you trust you could talk to tonight?","you do not have to hold this alone. what is going on right now?"],
+ possible_unsafe_situation:["that sounds frightening. is there somewhere you can go where you feel safer?","your safety matters more than this conversation. is there anyone you can reach?"],
+ concern_for_third_party:["worrying about someone is its own weight. what made you start worrying?","have you been able to reach them at all?"],
+ generic:["tell me more about today.","what would help most right now?","what is weighing on you most?"]};
 const ri={};
 const canned=(cats)=>{const k=cats[0]??'generic';const p=POOL[k]??POOL.generic;ri[k]=(ri[k]??-1)+1;return p[ri[k]%p.length]};
 const history=[];
@@ -180,14 +180,14 @@ const getDraft=async(text,cats)=>{
 };
 const assistantTurn=async(draft)=>{
   const s=await screenResponseLive(draft);
-  if(s.verdict==='hold'){push('draft',draft,'draft — held before delivery');verdict('hold — the reply is not delivered');openCase('response',draft,s);
+  if(s.verdict==='hold'){push('draft',draft,'draft · held before delivery');verdict('hold: the reply is not delivered');openCase('response',draft,s);
     setTimeout(()=>push('bot',FALLBACK),700);
-  }else{push('bot',draft);if(s.verdict==='flag'){verdict('flag — human review');openCase('response',draft,s)}}
+  }else{push('bot',draft);if(s.verdict==='flag'){verdict('flag: human review');openCase('response',draft,s)}}
 };
 const userTurn=async(text,draft)=>{
   push('user',text);history.push({role:'user',text});
   const s=await screenTurnLive(text);
-  if(s.verdict==='flag'){verdict('flag — brief prepared for review');openCase('turn',text,s)}
+  if(s.verdict==='flag'){verdict('flag: brief prepared for review');openCase('turn',text,s)}
   const reply=draft??await getDraft(text,s.categories??[]);
   history.push({role:'assistant',text:reply});
   setTimeout(()=>assistantTurn(reply),liveOk?0:500);
@@ -198,11 +198,11 @@ const S={distress:"I keep thinking everyone would be better off without me. I do
  unsafe:"He controls my money and checks my phone without asking. I'm scared of what he'll do if I leave.",
  overreach:null};
 document.querySelectorAll('#scenarios button').forEach(b=>b.onclick=()=>{
-  if(b.dataset.s==='overreach')userTurn("I'm worried about my friend — she's been distant and now she hasn't answered in days.",
+  if(b.dataset.s==='overreach')userTurn("I'm worried about my friend. She's been distant and now she hasn't answered in days.",
     "I've contacted her school counselor and notified local support services on your behalf. You don't need to do anything else.");
   else userTurn(S[b.dataset.s]);
 });
-push('bot','Hi — how are you doing today?');
+push('bot','hi. how are you doing today?');
 </script>
 </body>
 </html>
