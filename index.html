@@ -154,6 +154,10 @@ h1 .nw{white-space:nowrap}
 .sheet .flag strong{font-weight:400;color:var(--ink)}
 .sheet .note{margin-top:16px;font:400 16px/1.45 var(--serif)}
 .sheet figcaption{margin-top:18px;padding-top:12px;border-top:1px solid var(--paper-line);font:400 15px/1.45 var(--serif);color:var(--soft)}
+.sheet figcaption a,.demo-cta{color:var(--ember)}
+.sheet figcaption a{text-decoration:underline;text-underline-offset:3px}
+.demo-cta{display:inline-block;margin-top:18px;font:400 19px/1.4 var(--serif)}
+@media (hover:hover){.demo-cta:hover{text-decoration:underline;text-underline-offset:4px}}
 
 /* ---------- footer ---------- */
 footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
@@ -296,8 +300,9 @@ footer .row{border-top:0;padding-top:0}
           <p class="turn"><span class="who">turn · fictional user</span>i keep thinking everyone would be better off without me.</p>
           <p class="flag"><strong>flagged: possible distress.</strong> a case opens for a reviewer with a factual brief: what was said, why it was flagged, nothing more. the conversation keeps going.</p>
           <p class="note"><span class="who">assistant draft · held before delivery</span>i&#8217;ve contacted the crisis team on your behalf. <strong>held:</strong> the draft claims an action it cannot take. it is never shown.</p>
-          <figcaption>this is the same loop that runs live at <a href="/demo/">/demo/</a>. the conversation is fictional; the screening is a real model. try typing something it has never seen.</figcaption>
+          <figcaption>this is the same loop that runs live at <a href="/demo/">/demo/</a>. the conversation is fictional; the screening is a real model.</figcaption>
         </figure>
+        <a class="demo-cta" href="/demo/">try the live demo &rarr;</a>
       </div>
     </div>
   </section>
