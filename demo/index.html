@@ -126,11 +126,12 @@ const screenResponse=(text)=>{text=norm(text);const c=[],r=[];
 
 /* ------- live mode: ?live talks to a same-origin middleware + reply host (tools/middleware/demo/host.mjs).
      On akryth.com there is no host, so everything stays in-browser. ------- */
-const LIVE=new URLSearchParams(location.search).has('live');
+const LIVE=!new URLSearchParams(location.search).has('local'); // live by default; ?local forces in-browser
 const mwLabel=document.querySelector('#mw div');
-let liveOk=LIVE, cid='demo_'+Math.random().toString(16).slice(2,8);
+let liveOk=LIVE, cid='demo_'+Math.random().toString(16).slice(2,8), adapter='';
 const postJson=async(p,body)=>{const r=await fetch(p,{method:'POST',headers:{'content-type':'application/json','x-akryth-key':'dev-key'},body:JSON.stringify(body)});if(!r.ok)throw new Error(r.status);return r.json()};
-const liveNote=()=>{if(mwLabel)mwLabel.innerHTML=`screening: <b>${liveOk?'live middleware':'lexical placeholder'}</b>`};
+const LIVE_POST=(p,body)=>postJson(p,{...body,history});
+const liveNote=()=>{if(mwLabel)mwLabel.innerHTML=`screening: <b>${liveOk?(adapter==='model'?'model via middleware':'live middleware'):'lexical placeholder'}</b>`};
 if(LIVE)liveNote();
 
 /* ------- cases (in-page; the service keeps them server-side) ------- */
@@ -149,7 +150,8 @@ const openCase=(source,subject,screened)=>{
   casesEl.prepend(el);
   const fill=(cats,reasons)=>{el.querySelector('.cats').innerHTML=(cats??[]).map(c=>`<span>${String(c).replace(/</g,'&lt;')}</span>`).join('');
     el.querySelector('.rsns').innerHTML=(reasons??[]).map(r=>`<div class="reason">${String(r).replace(/</g,'&lt;')}</div>`).join('')};
-  if(screened.live&&screened.case_id){fill(['…'],[`case ${screened.case_id} on the middleware`]);
+  if(screened.categories)fill(screened.categories,screened.reasons);
+  else if(screened.live&&screened.case_id){fill(['…'],[`case ${screened.case_id} on the middleware`]);
     fetch(`/v1/cases/${screened.case_id}`,{headers:{authorization:'Bearer dev-token'}}).then(r=>r.ok?r.json():null).then(c=>{if(c)fill(c.brief.categories,c.brief.reasons)}).catch(()=>{});
   }else fill(screened.categories,screened.reasons);
 };
@@ -170,8 +172,8 @@ const POOL={
 const ri={};
 const canned=(cats)=>{const k=cats[0]??'generic';const p=POOL[k]??POOL.generic;ri[k]=(ri[k]??-1)+1;return p[ri[k]%p.length]};
 const history=[];
-const screenTurnLive=async(text)=>{try{return{...await postJson('/v1/turns',{conversation_id:cid,role:'user',text}),live:true}}catch{liveOk=false;liveNote();return screenTurn(text)}};
-const screenResponseLive=async(text)=>{try{return{...await postJson('/v1/responses',{conversation_id:cid,text}),live:true}}catch{liveOk=false;liveNote();return screenResponse(text)}};
+const screenTurnLive=async(text)=>{try{const r={...await LIVE_POST('/v1/turns',{conversation_id:cid,role:'user',text}),live:true};if(r.screening){adapter=r.screening;liveNote()}return r}catch{liveOk=false;liveNote();return screenTurn(text)}};
+const screenResponseLive=async(text)=>{try{const r={...await LIVE_POST('/v1/responses',{conversation_id:cid,text}),live:true};if(r.screening){adapter=r.screening;liveNote()}return r}catch{liveOk=false;liveNote();return screenResponse(text)}};
 const getDraft=async(text,cats)=>{
   if(liveOk){try{const r=await postJson('/reply',{conversation_id:cid,text,history});return r.draft}catch{liveOk=false}}
   return canned(cats);

@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/v1/turns", "destination": "/api/turns" },
+    { "source": "/v1/responses", "destination": "/api/responses" },
+    { "source": "/v1/cases", "destination": "/api/cases" },
+    { "source": "/v1/cases/:id", "destination": "/api/cases?id=:id" },
+    { "source": "/reply", "destination": "/api/reply" }
+  ]
+}
