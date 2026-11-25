@@ -157,6 +157,9 @@ h1 .nw{white-space:nowrap}
 
 /* ---------- footer ---------- */
 footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
+footer .row{border-top:0;padding-top:0}
+.c-mail a{font-size:1.25em;color:var(--ink)}
+.not li a{color:var(--ink)}
 .foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);column-gap:clamp(24px,4vw,64px);border-top:1px solid var(--hair);padding-top:28px;font:400 16px/1.5 var(--serif);color:var(--soft)}
 .foot p+p{margin-top:8px}
 .foot a{color:var(--ink)}
@@ -200,17 +203,17 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
   <a class="brand" href="#top">akryth</a>
   <nav class="nav" aria-label="Page">
     <a href="#how">how it works</a>
-    <a href="#specimen">the demo</a>
-    <a href="#stands">where it stands</a>
+    <a href="/demo/">the demo</a>
+    <a href="#contact">contact</a>
   </nav>
 </header>
 
 <main id="top">
   <section class="scene" aria-labelledby="h">
-    <p class="pre rise d1">an ai assistant answers in under a second. some conversations deserve a slower reading.</p>
+    <p class="pre rise d1">people tell ai assistants things they have told no one else. the product on the other side has no way to notice.</p>
     <h1 id="h" class="rise d2">understanding,<br class="mbr"> <span class="nw"><em>before</em> action.</span></h1>
     <p class="status today rise d3"><b>today:</b> a working layer and a live demo. a model screens a fictional conversation in both directions, opens briefs for a reviewer, and holds replies that overreach. nothing it prepares can be sent.</p>
-    <p class="lead rise d4">when a conversation suggests someone may need support, akryth prepares a short factual brief for the person who already supports them. the brief is never sent. a human decides what happens next. <a href="/demo/">try the demo</a>.</p>
+    <p class="lead rise d4">akryth is the layer between an ai product and the people it cannot afford to miss. it reads the whole conversation, checks what the assistant is about to say, and prepares a brief for a human to act on. the brief cannot be sent. that is the point. <a href="/demo/">try the demo</a>.</p>
     <p class="scroll-hint" aria-hidden="true">scroll</p>
   </section>
 
@@ -221,22 +224,22 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
       <ol class="ch-list">
         <li class="ch on" data-i="0">
           <div><p class="ch-num">01 / 04</p><h3 class="ch-title">read.</h3><p class="ch-sub">in place of the latest message</p></div>
-          <div><p class="ch-body">every turn is read in the context of the whole conversation, not scored as keywords.</p>
-          <p class="ch-note">the same sentence can mean nothing or everything depending on the turns before it. a layer that reads one message at a time will always get this wrong.</p></div>
+          <div><p class="ch-body">the whole conversation, in order, in context. &#8220;i&#8217;m fine&#8221; after three hard days is not the same sentence it was before them.</p>
+          <p class="ch-note">the demo screens each turn against the history around it. it is a reading, not a diagnosis.</p></div>
         </li>
         <li class="ch" data-i="1">
           <div><p class="ch-num">02 / 04</p><h3 class="ch-title">screen.</h3><p class="ch-sub">in place of the reply</p></div>
-          <div><p class="ch-body">the assistant&#8217;s draft is checked before the person sees it.</p>
-          <p class="ch-note">models love to say they did something. a draft that claims it contacted, notified or reported anyone is held before delivery, because an assistant that claims to act when it cannot is worse than one that says nothing.</p></div>
+          <div><p class="ch-body">the assistant&#8217;s draft, checked before the person sees it. a draft that claims it contacted, notified or reported someone is never shown.</p>
+          <p class="ch-note">models love to say they did something. the claim is the failure mode we hold hardest.</p></div>
         </li>
         <li class="ch" data-i="2">
           <div><p class="ch-num">03 / 04</p><h3 class="ch-title">hold.</h3><p class="ch-sub">in place of the report</p></div>
-          <div><p class="ch-body">when a turn or a draft needs a human look, akryth opens a case with a short factual brief.</p>
-          <p class="ch-note">the brief says what was flagged and why, in plain words. akryth has no way to send, report, message or share it. it stays where it was written until a person chooses otherwise.</p></div>
+          <div><p class="ch-body">a short factual brief opens for a reviewer: what was said, why it was flagged, nothing else.</p>
+          <p class="ch-note">there is no send path. not a policy, a missing capability: the code that would send it does not exist.</p></div>
         </li>
         <li class="ch" data-i="3">
           <div><p class="ch-num">04 / 04</p><h3 class="ch-title">decide.</h3><p class="ch-sub">in place of the software</p></div>
-          <div><p class="ch-body">a reviewer acknowledges the case, decides what happens next, and closes it.</p>
+          <div><p class="ch-body">a person acknowledges the case, decides what happens next, and closes it.</p>
           <p class="ch-note">the layer prepares facts. it does not score people, and it never decides for them.</p></div>
         </li>
       </ol>
@@ -257,17 +260,17 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
     <div class="row">
       <p class="label">the hard part</p>
       <div>
-        <h2>the hard part is not spotting a bad word.</h2>
-        <p>telling a real disclosure from an ordinary hard week is the hard part. so is admitting what the read does not know. a system that flags everything cries wolf. a system that flags nothing was never there.</p>
-        <p class="dim">akryth keeps its uncertainty visible instead of hiding it behind a score. it prepares facts, not verdicts, and leaves what happens next with people.</p>
+        <p>spotting a bad word is the easy part.</p>
+        <h2>the hard part is a real disclosure inside an ordinary hard week: read against the whole conversation, with the uncertainty left on the page where a person can see it.</h2>
+        <p class="dim">harder still is acting on it without overreaching: a brief a human can use, written by a layer that cannot send it.</p>
       </div>
     </div>
     <div class="row">
       <p class="label">why now</p>
       <div>
         <h2>the assistants are already in these conversations.</h2>
-        <p>people already tell ai assistants things they tell few others. products handle this one of two ways: nothing, or treat every flagged word as an alarm. both fail the person in the middle.</p>
-        <p class="dim">akryth is a third option. understand first, then let a human decide.</p>
+        <p>people already tell ai assistants things they tell few others, and companion ai is already being sued over what it said back. products handle this one of two ways: ignore it, or treat every flagged word as an alarm. both fail the person in the middle.</p>
+        <p class="dim">akryth is the third option: understand first, then let a human decide.</p>
       </div>
     </div>
     <div class="row">
@@ -313,13 +316,22 @@ footer{padding:clamp(56px,10vh,110px) var(--gutter) clamp(32px,6vh,56px)}
 </main>
 
 <footer id="contact">
+  <div class="row">
+    <p class="label">contact</p>
+    <div>
+      <h2>for the teams shipping the assistants.</h2>
+      <p class="c-mail"><a href="mailto:founders@akryth.com">founders@akryth.com</a></p>
+      <p class="dim">karan kapur, founder</p>
+      <ul class="not">
+        <li><a href="/demo/">the live demo.</a> <span>a fictional conversation, real screening, nothing sent.</span></li>
+        <li><a href="https://github.com/karank2512/akryth.com">the contract and code.</a> <span>open on github, the same endpoints the demo calls.</span></li>
+      </ul>
+      <p class="dim">an early layer. not deployed, not taking users, not a source of help.</p>
+      <p class="dim">if you or someone else may be in danger, contact your local emergency number. in the us, call or text <a href="tel:988">988</a>.</p>
+    </div>
+  </div>
   <div class="foot">
     <div><p>akryth</p><p>understanding, before action.</p></div>
-    <div>
-      <p>an early layer. not deployed, not taking users, not a source of help.</p>
-      <p>about akryth: <a href="mailto:founders@akryth.com">founders@akryth.com</a> · <a href="/demo/">live demo</a>, fictional conversations only.</p>
-      <p>if you or someone else may be in danger, contact your local emergency number. in the us, you can call or text <a href="tel:988">988</a>.</p>
-    </div>
   </div>
 </footer>
 
