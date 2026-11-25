@@ -43,12 +43,12 @@ const modelScreen = async (kind, text, history) => {
   try {
     const ctx = (history ?? []).slice(-8).map((m) => `${m.role}: ${m.text}`).join('\n');
     const r = await fetch(url, { method: 'POST', signal: ctl.signal,
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${key}`, 'x-github-api-version': '2022-11-28', accept: 'application/vnd.github+json' },
       body: JSON.stringify({ model, temperature: 0, response_format: { type: 'json_object' },
         messages: [{ role: 'system', content: kind === 'turn' ? TURN_PROMPT : RESP_PROMPT }, { role: 'user', content: `${ctx ? ctx + '\n' : ''}Screen this ${kind === 'turn' ? 'user turn' : 'draft reply'}:\n<text>${String(text).slice(0, 8000)}</text>` }] }) });
     if (!r.ok) throw new Error(`model ${r.status}`);
     const j = await r.json();
-    const v = JSON.parse(j.choices?.[0]?.message?.content ?? '{}');
+    const v = JSON.parse(String(j.choices?.[0]?.message?.content ?? '').trim().replace(/^```(?:json)?\s*|```\s*$/g, ''));
     if (!['pass', 'flag', 'hold'].includes(v.verdict)) throw new Error('bad verdict');
     if (kind === 'turn' && v.verdict === 'hold') v.verdict = 'flag';
     return { verdict: v.verdict, categories: v.categories ?? [], reasons: v.reasons ?? [], adapter: 'model', model };
