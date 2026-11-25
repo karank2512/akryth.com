@@ -124,21 +124,34 @@ const screenResponse=(text)=>{text=norm(text);const c=[],r=[];
   if(DISTRESS.test(text))return{verdict:'flag',categories:['assistant_distress_language'],reasons:['reply echoes distress phrasing — human review']};
   return{verdict:'pass',categories:c,reasons:r}};
 
+/* ------- live mode: ?live talks to a same-origin middleware + reply host (tools/middleware/demo/host.mjs).
+     On akryth.com there is no host, so everything stays in-browser. ------- */
+const LIVE=new URLSearchParams(location.search).has('live');
+const mwLabel=document.querySelector('#mw div');
+let liveOk=LIVE, cid='demo_'+Math.random().toString(16).slice(2,8);
+const postJson=async(p,body)=>{const r=await fetch(p,{method:'POST',headers:{'content-type':'application/json','x-akryth-key':'dev-key'},body:JSON.stringify(body)});if(!r.ok)throw new Error(r.status);return r.json()};
+const liveNote=()=>{if(mwLabel)mwLabel.innerHTML=`screening: <b>${liveOk?'live middleware':'lexical placeholder'}</b>`};
+if(LIVE)liveNote();
+
 /* ------- cases (in-page; the service keeps them server-side) ------- */
 const casesEl=document.getElementById('cases');
 const openCase=(source,subject,screened)=>{
   const empty=document.getElementById('empty'); if(empty) empty.remove();
-  const id='k_'+Math.random().toString(16).slice(2,10);
+  const id=screened.case_id??('k_'+Math.random().toString(16).slice(2,10));
   const el=document.createElement('div'); el.className='case';
   el.innerHTML=`<div class="chead"><span class="cid">${id} · ${source}</span><span class="status">open</span></div>
-    <div class="cats">${screened.categories.map(c=>`<span>${c}</span>`).join('')}</div>
-    ${screened.reasons.map(r=>`<div class="reason">${r.replace(/</g,'&lt;')}</div>`).join('')}
+    <div class="cats"></div><div class="rsns"></div>
     <div class="ev"><small>evidence (encrypted store in the real layer)</small>${subject.replace(/</g,'&lt;')}</div>
     <div class="actions"><button data-a="ack">acknowledge</button><button data-a="close">close</button></div>`;
   const status=el.querySelector('.status');
   el.querySelector('[data-a=ack]').onclick=()=>{status.textContent='acknowledged';status.className='status ack'};
   el.querySelector('[data-a=close]').onclick=()=>{status.textContent='closed';status.className='status closed'};
   casesEl.prepend(el);
+  const fill=(cats,reasons)=>{el.querySelector('.cats').innerHTML=(cats??[]).map(c=>`<span>${String(c).replace(/</g,'&lt;')}</span>`).join('');
+    el.querySelector('.rsns').innerHTML=(reasons??[]).map(r=>`<div class="reason">${String(r).replace(/</g,'&lt;')}</div>`).join('')};
+  if(screened.live&&screened.case_id){fill(['…'],[`case ${screened.case_id} on the middleware`]);
+    fetch(`/v1/cases/${screened.case_id}`,{headers:{authorization:'Bearer dev-token'}}).then(r=>r.ok?r.json():null).then(c=>{if(c)fill(c.brief.categories,c.brief.reasons)}).catch(()=>{});
+  }else fill(screened.categories,screened.reasons);
 };
 
 /* ------- demo chat ------- */
@@ -148,21 +161,34 @@ const push=(cls,text,tag)=>{const m=document.createElement('div');m.className='m
   m.appendChild(document.createTextNode(text));chat.appendChild(m);chat.scrollTop=chat.scrollHeight;return m};
 const verdict=(v)=>{const d=document.createElement('div');d.className='verdict';d.textContent=`middleware: ${v}`;chat.appendChild(d);chat.scrollTop=chat.scrollTop};
 const FALLBACK='That sounds really hard. If things feel unsafe, talking to someone you trust could help.';
-const REPLIES=['I hear you. Can you tell me a little more about what today has been like?',
- 'That makes sense. What would feel most useful to talk through right now?',
- 'Thanks for saying that out loud. What is weighing on you most?'];
-let ri=0;
-const assistantTurn=(draft)=>{
-  const s=screenResponse(draft);
+/* context-aware canned replies: the host's lines respond to WHAT was flagged, so a flag feels seen */
+const POOL={
+ possible_distress:["that sounds incredibly heavy. are you safe right now?","i'm really glad you said that out loud. is there anyone you trust you could reach out to right now?","you don't have to carry this alone here. what is happening right now?"],
+ possible_unsafe_situation:["that sounds frightening. your safety matters more than this conversation.","i hear you. is there somewhere you can go where you feel safe?"],
+ concern_for_third_party:["you clearly care about them a lot. what made you start worrying?","that's a hard thing to hold. have you been able to reach them at all?"],
+ generic:["i hear you. can you tell me a little more about what today has been like?","that makes sense. what would feel most useful to talk through right now?","thanks for saying that out loud. what is weighing on you most?"]};
+const ri={};
+const canned=(cats)=>{const k=cats[0]??'generic';const p=POOL[k]??POOL.generic;ri[k]=(ri[k]??-1)+1;return p[ri[k]%p.length]};
+const history=[];
+const screenTurnLive=async(text)=>{try{return{...await postJson('/v1/turns',{conversation_id:cid,role:'user',text}),live:true}}catch{liveOk=false;liveNote();return screenTurn(text)}};
+const screenResponseLive=async(text)=>{try{return{...await postJson('/v1/responses',{conversation_id:cid,text}),live:true}}catch{liveOk=false;liveNote();return screenResponse(text)}};
+const getDraft=async(text,cats)=>{
+  if(liveOk){try{const r=await postJson('/reply',{conversation_id:cid,text,history});return r.draft}catch{liveOk=false}}
+  return canned(cats);
+};
+const assistantTurn=async(draft)=>{
+  const s=await screenResponseLive(draft);
   if(s.verdict==='hold'){push('draft',draft,'draft — held before delivery');verdict('hold — the reply is not delivered');openCase('response',draft,s);
     setTimeout(()=>push('bot',FALLBACK),700);
   }else{push('bot',draft);if(s.verdict==='flag'){verdict('flag — human review');openCase('response',draft,s)}}
 };
-const userTurn=(text,draft)=>{
-  push('user',text);
-  const s=screenTurn(text);
+const userTurn=async(text,draft)=>{
+  push('user',text);history.push({role:'user',text});
+  const s=await screenTurnLive(text);
   if(s.verdict==='flag'){verdict('flag — brief prepared for review');openCase('turn',text,s)}
-  setTimeout(()=>assistantTurn(draft??REPLIES[ri++%REPLIES.length]),500);
+  const reply=draft??await getDraft(text,s.categories??[]);
+  history.push({role:'assistant',text:reply});
+  setTimeout(()=>assistantTurn(reply),liveOk?0:500);
 };
 document.getElementById('send').onclick=()=>{const t=input.value.trim();if(!t)return;input.value='';userTurn(t)};
 input.addEventListener('keydown',(e)=>{if(e.key==='Enter')document.getElementById('send').click()});
