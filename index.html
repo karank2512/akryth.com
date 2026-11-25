@@ -95,8 +95,9 @@ h1 .nw{white-space:nowrap}
 .js .scroll-hint{opacity:0;transition:opacity 1s var(--ease) .8s}
 .js body.shown .scroll-hint{opacity:.75}
 
-/* ---------- page ground ---------- */
-.page{position:relative;background:var(--bg)}
+/* ---------- page ground: fog stays behind the whole page ---------- */
+.page{position:relative}
+@media (prefers-color-scheme:light){.page{background:var(--bg)}}
 
 /* ---------- chapters ---------- */
 .chapters{position:relative;padding:0 var(--gutter)}
@@ -165,7 +166,8 @@ footer .row{border-top:0;padding-top:0}
 .c-mail a{font-size:1.25em;color:var(--ink);text-decoration:underline;text-underline-offset:4px}
 .u{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
 .not li a{color:var(--ink)}
-.foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);column-gap:clamp(24px,4vw,64px);border-top:1px solid var(--hair);padding-top:28px;font:400 16px/1.5 var(--serif);color:var(--soft)}
+.foot{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(24px,4vw,64px);border-top:1px solid var(--hair);padding-top:28px;font:400 17px/1.6 var(--serif);color:var(--soft)}
+.foot-r{text-align:right}
 .foot p+p{margin-top:8px}
 .foot a{color:var(--ink)}
 @media (hover:hover){.foot a:hover{text-decoration:underline;text-underline-offset:4px}}
@@ -175,6 +177,7 @@ footer .row{border-top:0;padding-top:0}
   .ch-body,.row h2,.specimen h2{margin-top:18px}
   .row>div>p:first-of-type{margin-top:20px}
   .foot>div+div{margin-top:16px}
+  .foot-r{text-align:left}
   .prose,.specimen{padding-top:28px}
 }
 @media (max-width:599px){
@@ -322,9 +325,13 @@ footer .row{border-top:0;padding-top:0}
     </div>
   </div>
   <div class="foot">
-    <div><p>akryth</p><p>understanding, before action.</p></div>
-    <div><p>an early layer. not deployed, not taking users, not a source of help.</p>
-      <p>if you or someone else may be in danger, contact your local emergency number. in the us, call or text <a href="tel:988">988</a>.</p>
+    <div>
+      <p><a class="u" href="/demo/">the demo</a>, a fictional conversation screened live, nothing sent</p>
+      <p><a class="u" href="https://github.com/karank2512/akryth.com">the contract + code</a>, open on github</p>
+    </div>
+    <div class="foot-r">
+      <p>if you need help now in the us,<br>call or text <a class="u" href="tel:988">988</a>.</p>
+      <p>an early layer. not deployed, not taking users.</p>
     </div>
   </div>
 </footer>
@@ -382,7 +389,7 @@ footer .row{border-top:0;padding-top:0}
   const tc = tile.getContext('2d'), img = tc.createImageData(S, S);
   for (let i = 0; i < S * S; i++) {
     let v = (T[i] - mn) / (mx - mn); v = Math.pow(v, 1.6);
-    img.data[i * 4] = 150 + v * 90; img.data[i * 4 + 1] = 165 + v * 80; img.data[i * 4 + 2] = 200 + v * 55;
+    img.data[i * 4] = 62 + v * 95; img.data[i * 4 + 1] = 66 + v * 80; img.data[i * 4 + 2] = 150 + v * 105;
     img.data[i * 4 + 3] = v * 255;
   }
   tc.putImageData(img, 0, 0);
@@ -393,7 +400,7 @@ footer .row{border-top:0;padding-top:0}
 
   function paint(t) {
     ctx.fillStyle = '#0a0d17'; ctx.fillRect(0, 0, W, H);  /* the sky is night in both themes */
-    const layers = [[2.6, .0000063, .0000041, .16], [3.8, -.0000049, .0000031, .12], [5.2, .0000027, -.0000037, .09]];
+    const layers = [[3.4, .0000063, .0000041, .2], [5, -.0000049, .0000031, .15], [6.8, .0000027, -.0000037, .11]];
     for (const [sc, vx, vy, a] of layers) {
       const w = S * sc, ox = ((t * vx * S) % w + w) % w, oy = ((t * vy * S) % w + w) % w;
       ctx.globalAlpha = a;
