@@ -23,19 +23,19 @@ header{display:flex;align-items:baseline;gap:18px;padding:22px 28px;border-botto
 header .brand{font-size:24px;letter-spacing:.02em}
 header .sub{color:var(--dim);font-size:14px;font-style:italic}
 header .pill{margin-left:auto;font-size:14px;font-style:italic;color:var(--ember)}
-main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;min-height:calc(100vh - 76px)}
-@media(max-width:860px){main{grid-template-columns:1fr}}
-.panel{display:flex;flex-direction:column;min-height:0}
+main{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0;height:calc(100vh - 76px)}
+@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:none;height:auto}}
+.panel{display:flex;flex-direction:column;min-height:0;overflow:hidden}
 #right{border-left:1px solid var(--line)}
 @media(max-width:860px){#right{border-left:0;border-top:1px solid var(--line)}}
 .panel h2{font-size:15px;font-weight:400;font-style:italic;color:var(--dim);padding:20px 26px 6px}
 /* ---------- phone / messages screen ---------- */
-.phone{flex:1;display:flex;flex-direction:column;width:min(430px,94%);margin:14px auto 18px;border:1px solid var(--line);border-radius:30px;overflow:hidden;background:#000;min-height:420px}
+.phone{flex:1;display:flex;flex-direction:column;width:min(430px,94%);margin:14px auto 18px;border:1px solid var(--line);border-radius:30px;overflow:hidden;background:#000;min-height:0}
 .ph-head{display:flex;align-items:center;padding:11px 16px;background:#141416;border-bottom:1px solid #27272c;font:500 15px var(--sans);color:#eaeaee}
 .ph-head .back{color:#0a84ff;font-size:24px;line-height:.8;font-weight:300}
 .ph-c{margin:0 auto;display:flex;align-items:center;gap:9px;transform:translateX(-14px)}
 .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(#58585f,#38383e);display:grid;place-items:center;color:#d6d6db;font:400 14px var(--sans)}
-#chat-body{flex:1;overflow-y:auto;padding:16px 14px 20px;display:flex;flex-direction:column;gap:9px;background:#000;font-family:var(--sans)}
+#chat-body{flex:1;overflow-y:auto;min-height:0;padding:16px 14px 20px;display:flex;flex-direction:column;gap:9px;background:#000;font-family:var(--sans)}
 .msg{max-width:76%;padding:9px 13px;border-radius:19px;font-size:15.5px;line-height:1.35;white-space:pre-wrap;color:#f2f2f5}
 .msg.user{align-self:flex-end;background:#0a84ff;border-bottom-right-radius:5px}
 .msg.bot{align-self:flex-start;background:#26252b;border-bottom-left-radius:5px}
@@ -57,7 +57,7 @@ button:hover{color:var(--ember);text-decoration-color:var(--ember-dim)}
 #mw{padding:2px 26px 8px;font-size:13.5px;font-style:italic;color:var(--dim)}
 #mw b{color:var(--soft);font-weight:400}
 #mw-sub{padding:0 26px 12px;font-size:14px;color:var(--dim);line-height:1.5}
-#cases{flex:1;overflow-y:auto;padding:6px 26px 22px;display:flex;flex-direction:column}
+#cases{flex:1;overflow-y:auto;min-height:0;padding:6px 26px 22px;display:flex;flex-direction:column}
 .case{border-top:1px solid var(--line);padding:16px 2px 14px}
 .case:first-child{border-top:0;padding-top:2px}
 .case .chead{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
