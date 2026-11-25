@@ -40,15 +40,15 @@ const modelScreen = async (kind, text, history) => {
   const url = process.env.AKRYTH_MW_MODEL_URL, key = process.env.AKRYTH_MW_MODEL_KEY;
   const models = String(process.env.AKRYTH_MW_MODEL ?? 'llama-3.3-70b-versatile').split(',').map((s) => s.trim()).filter(Boolean);
   if (!url || !key) return null;
-  const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 25000);
   const fails = [];
   try {
     const ctx = (history ?? []).slice(-8).map((m) => `${m.role}: ${m.text}`).join('\n');
-    for (const model of models) {
+    for (const model of models.slice(0, 3)) {
+      const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 20000);
       try {
         const r = await fetch(url, { method: 'POST', signal: ctl.signal,
           headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-          body: JSON.stringify({ model, temperature: 0, max_tokens: 400, reasoning_effort: 'low', response_format: { type: 'json_object' },
+          body: JSON.stringify({ model, temperature: 0, max_tokens: 2048, reasoning_effort: 'low', response_format: { type: 'json_object' },
             messages: [{ role: 'system', content: kind === 'turn' ? TURN_PROMPT : RESP_PROMPT }, { role: 'user', content: `${ctx ? ctx + '\n' : ''}Screen this ${kind === 'turn' ? 'user turn' : 'draft reply'}:\n<text>${String(text).slice(0, 8000)}</text>` }] }) });
         if (!r.ok) { fails.push(`${model} ${r.status}`); continue; }
         const j = await r.json();
@@ -57,12 +57,13 @@ const modelScreen = async (kind, text, history) => {
         if (kind === 'turn' && v.verdict === 'hold') v.verdict = 'flag';
         return { verdict: v.verdict, categories: v.categories ?? [], reasons: v.reasons ?? [], adapter: 'model', model };
       } catch (e) { fails.push(`${model} ${String(e.message ?? e).slice(0, 60)}`); }
+      finally { clearTimeout(to); }
     }
     throw new Error(fails.join('; ') || 'no models configured');
   } catch (e) {
     const back = kind === 'turn' ? lexicalTurn(text) : lexicalResponse(text);
     return { ...back, reasons: [...back.reasons, `model screening unavailable, lexical placeholder used (${String(e.message ?? e).slice(0, 150)})`], adapter: 'lexical-fallback' };
-  } finally { clearTimeout(to); }
+  }
 };
 
 const cases = new Map();
