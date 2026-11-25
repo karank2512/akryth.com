@@ -59,7 +59,7 @@ const modelScreen = async (kind, text, history) => {
     return { verdict: v.verdict, categories: v.categories ?? [], reasons: v.reasons ?? [], adapter: 'model', model };
   } catch (e) {
     const back = kind === 'turn' ? lexicalTurn(text) : lexicalResponse(text);
-    return { ...back, reasons: [...back.reasons, `model screening unavailable, lexical placeholder used (${String(e.message ?? e).slice(0, 100)})`], adapter: 'lexical-fallback' };
+    return { ...back, reasons: [...back.reasons, `model screening unavailable, lexical placeholder used (${String(e.message ?? e).slice(0, 100)} on '${model}')`], adapter: 'lexical-fallback' };
   } finally { clearTimeout(to); }
 };
 
